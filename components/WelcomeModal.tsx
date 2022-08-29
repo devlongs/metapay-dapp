@@ -25,7 +25,7 @@ const ModalWrapper = styled.div`
      height: 600px;
      background: #fff;
      z-index: 10;
-
+     
      @media (max-width: 547px) { 
        width: 500px;
        height: 600px;
