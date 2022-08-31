@@ -12,17 +12,17 @@ interface IProps {
 const Background = styled.div`
      width: 100%;
      height: 100%;
-     background: linear-gradient(180deg, rgba(143, 0, 255, 0.7) 0%, rgba(56, 112, 255, 0.7) 100%);
+     background: linear-gradient(180deg, rgba(143, 0, 255, 0.5) 0%, rgba(56, 112, 255, 0.5) 100%);
      position: fixed;
      display: flex;
      justify-content: center;
      align-items: center;
-     z-index: 10;
+     z-index: 1000;
 `
 const ModalWrapper = styled.div`
-     border-radius: 30px;
+     border-radius: 20px;
      width: 600px;
-     height: 600px;
+     height: 650px;
      background: #fff;
      z-index: 10;
      
@@ -94,6 +94,34 @@ const CloseModalButton = styled(MdOutlineClose)`
      background-color: #8F00FF;
      z-index: 10;
 `
+const Content = styled.div`
+     display: grid;
+     place-items: center;
+     inline-size: 90%;
+     margin-inline: auto;
+     max-inline-size: 20rem;
+`
+
+const Label = styled.h3`
+     margin-top: 30px;
+     font-weight: 400;
+     font-size: 18px;
+     line-height: 30px;
+     color: #3870FF;
+     display: flex;
+`
+
+const Input = styled.input`
+  margin-top: -15px;
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: 1px solid #8F00FF;
+  color: #3870FF;
+  border-radius: 10px;
+
+`;
 
 const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
 
@@ -101,10 +129,10 @@ const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
       
       const animation = useSpring({
         config: {
-          duration: 250
+          duration: 300
         }, 
         opacity: showModal ? 1 : 0,
-        transform: showModal ? `translateY(0%)` : `translateY(-100%)`
+        transform: showModal ? `translateY(0%)` : `translateY(100%)`
       })
 
       const closeModal = (e) => {
@@ -137,15 +165,22 @@ const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
                           onClick={() => setShowModal(prev => !prev)}
                            />
                            
-                         <h1>Welcome to MetaPay</h1>
-
-                         <p>You will need a crypto wallet like MetaMask to interact with MetaPay. 
-                              Please if you don’t have it, we require you to install it 
-                              in your available devices. If you have one please proceed 
-                              and click the button below. Thanks!</p>
-                     <Link href="/Home">
+                       <Content>
+                         <Label>Name of Campaign</Label>
+                         <Input type="text"/>
+                         <Label>Name of Campaign Organizer</Label>
+                         <Input type="text"/>
+                          <Label>Wallet Address of Campaign Organizer</Label>
+                         <Input type="text"/>
+                         <Label>Description of Campaign</Label>
+                         <Input type="text"/>
+                         <Label>Duration</Label>
+                         <Input type="text"/>
+                       </Content>
+                     
+                     {/* <Link href="/Home">
                          <button>Proceed</button>
-                    </Link>
+                    </Link> */}
                     </ModalContent>
                </ModalWrapper>
                </animated.div>

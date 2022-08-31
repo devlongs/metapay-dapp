@@ -28,6 +28,10 @@ background: linear-gradient(180deg, rgba(56, 112, 255, 0.4) 0%, rgba(143, 0, 255
   width: 400px;
 }
 
+.logo2 {
+  width: 150px;
+}
+
 .subTitle {
   color: #FFFFFF;
   font-weight: 400;
@@ -180,4 +184,8 @@ background: linear-gradient(180deg, #3870FF 0%, rgba(143, 0, 255, 0.6) 100%);
      margin-left: 55px;
       font-size: 20px;
    }
+
+   .logo2 {
+      width: 120px;
+    }
 }

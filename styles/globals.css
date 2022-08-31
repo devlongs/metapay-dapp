@@ -6,6 +6,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: "Rubik", sans-serif;
+ background: linear-gradient(180deg, rgba(143, 0, 255, 0.25) 0%, rgba(56, 112, 255, 0.25) 99.99%, rgba(217, 217, 217, 0) 100%);
 }
 
 a {
