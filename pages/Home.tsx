@@ -197,10 +197,10 @@ const Home = () => {
 
                     <ContainerDetail>
                          <Content>
-                           <h2>Flood Victims Support  <button onClick={()=>{}}>Donate</button></h2>
-              
-                           <h2>Poverty Eradication  <button onClick={()=>{}}>Donate</button></h2>
+                           <h2>Poverty Eradication <button onClick={()=>{}}>Donate</button></h2>
                       
+                           <h2>Flood Victims Support  <button onClick={()=>{}}>Donate</button></h2>
+            
                            <h2>Fire Outbreak Support <button onClick={()=>{}}>Donate</button></h2>
                          </Content>
                     </ContainerDetail>

@@ -3,6 +3,7 @@ import { useSpring, animated } from 'react-spring'
 import Link from 'next/link'
 import styled from 'styled-components'
 import { MdOutlineClose } from 'react-icons/md'
+import styles from '../styles/Welcome.module.css'
 
 interface IProps {
    showModal: any;
@@ -27,8 +28,8 @@ const ModalWrapper = styled.div`
      z-index: 10;
      
      @media (max-width: 547px) { 
-       width: 350px;
-       height: 600px;
+       width: 352px;
+       height: 650px;
      }
 `
 const ModalContent = styled.div`
@@ -87,12 +88,13 @@ const CloseModalButton = styled(MdOutlineClose)`
      position: relative;
      width: 25px;
      height: 25px;
-     padding: 0;
+     /* padding: 0; */
      margin-top: 20px;
      border-radius: 50%;
      color: #fff;
      background-color: #8F00FF;
      z-index: 10;
+     margin-bottom: 5px;
 `
 const Content = styled.div`
      display: grid;
@@ -102,28 +104,55 @@ const Content = styled.div`
      max-inline-size: 20rem;
 `
 
-const Label = styled.h3`
-     margin-top: 30px;
-     font-weight: 400;
-     font-size: 18px;
+const Label = styled.label`
+     /* margin-top: 20px; */
+     
+     h3 {
+      font-weight: 400;
+     font-size: 17px;
      line-height: 30px;
      color: #3870FF;
-     display: flex;
+      margin-bottom: 10px;
+     }
 `
 
 const Input = styled.input`
-  margin-top: -15px;
+  /* margin-top: -15px; */
   font-size: 16px;
-  width: 100%;
-  height: 40px;
+    width: 20em;
+  height: 3em;
   outline: none;
   border: 1px solid #8F00FF;
   color: #3870FF;
   border-radius: 10px;
-
 `;
 
-const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
+const H3 = styled.h3`
+    font-weight: 400;
+     font-size: 17px;
+     line-height: 30px;
+     color: #3870FF;
+     margin-top: 10px;
+` 
+const Create = styled.span`
+   background: #8F00FF;
+   border-radius: 10px;
+   margin-top: 40px;
+   width: 100px;
+   height: 40px;
+   border: none;
+   cursor: pointer;
+
+   h2 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #FFFFFF;
+   }
+`
+
+const Modal = ( {showModal, setShowModal} : IProps) => {
 
       const modalRef = useRef();
       
@@ -166,29 +195,50 @@ const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
                            />
                            
                        <Content>
-                         <Label>Name of Campaign</Label>
-                         <Input type="text"/>
-                         <Label>Name of Campaign Organizer</Label>
-                         <Input type="text"/>
-                          <Label>Wallet Address of Campaign Organizer</Label>
-                         <Input type="text"/>
-                         <Label>Description of Campaign</Label>
-                         <Input type="text"/>
-                         <Label>Duration</Label>
-                         <Input type="text"/>
+                         <Label>
+                           <h3>Name of Campaign</h3> 
+                          <Input type="text"/>
+                         </Label>
+                         
+                         <Label>
+                            <h3>Name of Campaign Organizer</h3>
+                           <Input type="text"/>
+                         </Label>
+                        
+                          <Label>
+                            <h3>Wallet Address</h3>
+                             <Input type="text"/>
+                          </Label>
+                        
+                         <Label>
+                             <h3>Description of Campaign</h3>
+                            <Input type="text"/>
+                         </Label>
+                        
+                         <div className={styles.select}>
+                             <H3>Duration of Campaign</H3>
+                             <select className={styles.selectStyle}>
+                               <option value="1">6 days</option>
+                               <option value="2">1 week</option>
+                               <option value="3">2 week</option>
+                             </select>
+                         </div>
+                         
                        </Content>
+
+                         <Link href="/Create">
+                         <Create onClick={()=> {}}><h2>Create</h2></Create>
+                        </Link>
                      
-                     {/* <Link href="/Home">
-                         <button>Proceed</button>
-                    </Link> */}
+                 
                     </ModalContent>
                </ModalWrapper>
                </animated.div>
             </Background>
          ): 
-         null} 
+            null} 
         </>
      )
 }
 
-export default WelcomeModal
+export default Modal
