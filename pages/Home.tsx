@@ -4,80 +4,71 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar'
-import Modal from '../components/Modal'
+import CreateCampaign from '../components/createCampaign'
+import { ethers } from 'ethers'
+declare let window: any;
+import contractABI from '../abi.json'
 
-
-const Wrapper = styled.span`
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   margin: 0;
-   height: 100vh;
-   width: 100%;
-   overflow: hidden;
+const PageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
 `
-const Container = styled.div`
-  background: #ffff;
-  border-radius: 10px;
-  width: 550px;
-  height: 600px;
-  margin-top: 70px;
+const ContentWrap = styled.div`
+    padding-bottom: 2.5rem;
+    width: 95vw;
+    max-width: 481px;
+    padding: 2rem;
+    border-radius: 10px;
+    background: #fff;
 
-  @media (max-width: 1129px) {
+    /* @media (max-width: 1129px) {
     margin-top: 100px;
   }
 
    @media (max-width: 547px) {
      margin-top: 150px;
      width: 350px;
-  }
+  } */
 `
-const ContainerContent = styled.span`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+const ContainerContent = styled.div`
     
-    h1 {
-     font-weight: 500;
-     font-size: 30px;
-     line-height: 41px;
-     color: #3870FF;
-     margin-top: 70px;
-
-    @media (max-width: 547px) {
-      font-size: 25px;
-    }
-    
-    }
-
   button {
+    margin-left: 25%;
     background: #ffff;
     text-decoration: none;
     padding: 5px 10px;
     outline: none;
-    border-radius: 10px;
-    border: 1px solid #8F00FF;
-    color: #8F00FF;
-    font-weight: 300;
-    font-size: 15px;
+    border-radius: 15px;
+    border: 1px solid #3870FF;
+    color: #3870FF;
+    font-weight: 400;
+    font-size: 18px;
     line-height: 24px;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
 
          &:hover {
-           background: lighten(#b53ef5, 10%);
+           background: lighten(#5182fc, 10%);
          }
 
         &:active {
           color: #ffff;
-          background: #8F00dd; 
+          background: #3870FF; 
           box-shadow: inset 0px 1px 1px fadeout(black, 90%); 
         }
 
          &:focus {
            outline: none;
          }
+
+       @media (max-width: 547px) {
+          font-size: 16px;
+          font-weight: 400px;
+          margin-left: 20%;
+       }
+    
   }
 
     p {
@@ -85,10 +76,11 @@ const ContainerContent = styled.span`
      font-size: 20px;
      line-height: 36px;
      color: #3870FF;
+     text-align: center;
      margin-bottom: 10px;
 
      @media (max-width: 547px) {
-       font-size: 20px;
+       font-size: 18px;
      }
     }
 `
@@ -97,36 +89,35 @@ const ContainerDetail = styled.div`
    justify-content: center;
 `
 const Content = styled.div`
-   margin-top: 20px;
+   margin-top: 10px;
     
    h2 {
-    /* text-align: center; */
-    max-width: 350px;
+    /* max-width: 350px; */
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 41px;
     color: #3870FF;
 
     
      @media (max-width: 547px) {
-       font-size: 18px;
+       font-size: 16px;
      }
   }
 
   button {
-        margin-left: 20px;
+        margin-left: 10px;
         background: linear-gradient(180deg, rgba(143, 0, 255, 0.4) 0%, rgba(56, 112, 255, 0.4) 100%);
         border-radius: 10px;
         border: none;
         font-weight: 400;
-        font-size: 18px;
-        width: 80px;
+        font-size: 17.3px;
+        width: 150px;
         height: 40px;
-        line-height: 24px;
+        /* line-height: 24px; */
         color: #FFFFFF;
         cursor: pointer;
-       
-          
+        margin-bottom: 15px;
+     
     &:hover {
       background: lighten(#b53ef5, 10%);
     }
@@ -139,34 +130,72 @@ const Content = styled.div`
     &:focus {
       outline: none;
     }
+
+  
   }
 
 `
-// const Button = styled.button`
+const Button = styled.span`
+    font-size: 16px;
+    font-weight: 400px;
+    padding: .75rem;
+    border: 1px solid #3870FF;
+    border-radius: 10px;
+    color: #3870FF;
+    text-align: center;
+    margin-left: 25%;
+    cursor: pointer;
 
-// `
+       @media (max-width: 547px) {
+          margin-left: 20%;
+       }
+`
 
-const Footer = styled.span`
+const Footer = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;    
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
   color: #3870FF;
-  margin-top: -50px;
+  /* margin-top: 100px; */
+  background: linear-gradient(180deg, rgba(143, 0, 255, 0.25) 0%, rgba(56, 112, 255, 0.25) 99.99%, rgba(217, 217, 217, 0) 100%);
 
-
-   @media (max-width: 1129px) {
-     margin-top: 50px;
-  }
 `
+
+
 
 const Home = () => {
 
+    // const {ethereum} = window;
     const [date, setDate] = useState<any | null>();
     const [showModal, setShowModal] = useState(false);
+    const [createcampaign, setCreateCampaign] = useState([]);
+    // const [campaign, setCampaign] = useState([]);
+    const [provider, setProvider] = useState<any | null>(null);
+    const [signer, setSigner] = useState<any | null>(null);
+    const [contract, setContract] = useState<any | null>(null);
+    
+    //@dev - check Polygon Mumbai for the smart contract and the Abi with this contractAddress
+    const contractAddress = "0x8f40926A042745b2e7E9713DC3CDaEa4b9F4f834";
+
+      const updateEthers = () => {
+        const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(tempProvider);
+
+        //the signer of the contract
+        const tempSigner = tempProvider.getSigner();
+        setSigner(tempSigner);
+
+        const tempContract = new ethers.Contract(contractAddress, contractABI, tempSigner);
+        setContract(tempContract);
+      }
+
     
       const openModal = () => {
         setShowModal(prev => !prev)
@@ -180,34 +209,47 @@ const Home = () => {
         getYear();
     }, [])
 
+
      return (
              <div>
               {/* @dev - Navbar component is here */}
               <Navbar />
+              
               {/* @dev - Modal display component is here */}
-              <Modal showModal={showModal} setShowModal={setShowModal} />
-             <Wrapper>
-               <Container>
+              <CreateCampaign showModal={showModal} setShowModal={setShowModal}
+               contract={contract} setCreateCampaign={setCreateCampaign} />
+             <PageContainer>
+              {/* {loading ? (
+           <div className="">Loading...</div>
+            ) : ( */}
+               
+               <ContentWrap>
                    <ContainerContent>
-                      <h1>CREATE A CAMPAIGN</h1>
-                      <button onClick={openModal}>Create</button>
-                       <p>list of campaigns available on MetaPay</p>
-                   </ContainerContent>
-
-
-                    <ContainerDetail>
-                         <Content>
-                           <h2>Poverty Eradication <button onClick={()=>{}}>Donate</button></h2>
+                    <Link href="" >
+                      <button onClick={openModal}>CREATE A CAMPAIGN</button>
+                    </Link>
                       
-                           <h2>Flood Victims Support  <button onClick={()=>{}}>Donate</button></h2>
+                       <p>All Campaigns</p>
+
+                        <ContainerDetail>
+                         <Content>
+                           <h2>0x35643690....... <button onClick={()=>{}}>View Campaign</button></h2>
+                      
+                           <h2>0x35643690.......  <button onClick={()=>{}}>View Campaign</button></h2>
             
-                           <h2>Fire Outbreak Support <button onClick={()=>{}}>Donate</button></h2>
+                           <h2>0x35643690....... <button onClick={()=>{}}>View Campaign</button></h2>
+
+                          <Link href="/Campaigns">
+                           <Button onclick={()=>{}}>View all Campaigns</Button>
+                         </Link>
                          </Content>
                     </ContainerDetail>
-               </Container>
-             </Wrapper>
-
-                <Footer> Metapay - &copy; {date} </Footer>
+                   </ContainerContent>
+               </ContentWrap>
+                  {/* )} */}
+                  
+                  <Footer> Metapay - &copy; {date} </Footer>  
+             </PageContainer>            
           </div>
      )
 }
