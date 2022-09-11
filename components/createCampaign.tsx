@@ -8,8 +8,6 @@ import Container from '../components/CoModal'
 interface IProps {
    showModal: any;
    setShowModal: any;
-   contract: any;
-   setCreateCampaign: any;
 }
 
 const Background = styled.div`
@@ -98,7 +96,7 @@ const CloseModalButton = styled(MdOutlineClose)`
      margin-bottom: 5px;
 ` 
 
-const Campaign = ( {showModal, setShowModal, contract, setCreateCampaign } : IProps) => {
+const Campaign = ( {showModal, setShowModal } : IProps) => {
       
      const [input, setInput] = useState("")
    
@@ -142,12 +140,7 @@ const Campaign = ( {showModal, setShowModal, contract, setCreateCampaign } : IPr
                           onClick={() => setShowModal(prev => !prev)}
                            />
                            
-                       <Container 
-                        input={input} 
-                        contract={contract} 
-                        setCreateCampaign={setCreateCampaign} 
-                        setInput={setInput}
-                        />
+                       <Container />
 
                     </ModalContent>
                </ModalWrapper>

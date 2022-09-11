@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import styled from 'styled-components'
 import Navbar from '../components/Navbar'
 import CreateCampaign from '../components/createCampaign'
-import { ethers } from 'ethers'
-declare let window: any;
-import contractABI from '../abi.json'
+import { useAccount} from "wagmi"
+import useMetaPayRead from './hooks/useMetaPayRead'
+import useMetaPayWrite from './hooks/useMetaPayWrite'
 
 const PageContainer = styled.div`
   position: relative;
@@ -66,7 +66,7 @@ const ContainerContent = styled.div`
        @media (max-width: 547px) {
           font-size: 16px;
           font-weight: 400px;
-          margin-left: 20%;
+          margin-left: 18.6%;
        }
     
   }
@@ -175,28 +175,7 @@ const Home = () => {
     // const {ethereum} = window;
     const [date, setDate] = useState<any | null>();
     const [showModal, setShowModal] = useState(false);
-    const [createcampaign, setCreateCampaign] = useState([]);
-    // const [campaign, setCampaign] = useState([]);
-    const [provider, setProvider] = useState<any | null>(null);
-    const [signer, setSigner] = useState<any | null>(null);
-    const [contract, setContract] = useState<any | null>(null);
-    
-    //@dev - check Polygon Mumbai for the smart contract and the Abi with this contractAddress
-    const contractAddress = "0x8f40926A042745b2e7E9713DC3CDaEa4b9F4f834";
 
-      const updateEthers = () => {
-        const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(tempProvider);
-
-        //the signer of the contract
-        const tempSigner = tempProvider.getSigner();
-        setSigner(tempSigner);
-
-        const tempContract = new ethers.Contract(contractAddress, contractABI, tempSigner);
-        setContract(tempContract);
-      }
-
-    
       const openModal = () => {
         setShowModal(prev => !prev)
       }
@@ -211,13 +190,12 @@ const Home = () => {
 
 
      return (
-             <div>
+             <Fragment>
               {/* @dev - Navbar component is here */}
               <Navbar />
               
               {/* @dev - Modal display component is here */}
-              <CreateCampaign showModal={showModal} setShowModal={setShowModal}
-               contract={contract} setCreateCampaign={setCreateCampaign} />
+              <CreateCampaign showModal={showModal} setShowModal={setShowModal} />
              <PageContainer>
               {/* {loading ? (
            <div className="">Loading...</div>
@@ -250,7 +228,7 @@ const Home = () => {
                   
                   <Footer> Metapay - &copy; {date} </Footer>  
              </PageContainer>            
-          </div>
+          </Fragment>
      )
 }
 

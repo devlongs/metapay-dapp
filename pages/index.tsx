@@ -30,7 +30,7 @@ const Home: NextPage = () => {
           <div className={styles.logo}>
             <Image src={logo1} alt="metapay logo" />
           </div>
-            <h1 className={styles.subTitle}>MetaPay is replacing GoFundMe...</h1>
+            <h1 className={styles.subTitle}>MetaPay it to Me...</h1>
         </div>
 
           <div className={styles.right}>

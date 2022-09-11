@@ -5,7 +5,8 @@ import Image from 'next/image'
 import styled from 'styled-components'
 import logo from '../assets/metapay-logo.svg';
 import styles from '../styles/Welcome.module.css'
-declare let window: any;
+// declare let window: any;
+import ConnectionButton from "../components/ConnectionButton";
 
 const Nav = styled.nav`
   position: relative;
@@ -45,26 +46,26 @@ const Button  = styled.button`
 
 const Navbar = () => {
     
-    const [errorMessage, setErrorMessage] = useState<any | null>(null)
-    const [defaultAccount, setDefaultAccount] = useState<any | null>(null)
-    const [connButtonText, setConnButtonText] = useState('Connect Wallet')
+    // const [errorMessage, setErrorMessage] = useState<any | null>(null)
+    // const [defaultAccount, setDefaultAccount] = useState<any | null>(null)
+    // const [connButtonText, setConnButtonText] = useState('Connect Wallet')
 
-      const connectWallet = () => {
-        if (window.ethereum) {
-            window.ethereum.request({ method: 'eth_requestAccounts'})
-            .then(result => {
-              accountChangedHandler(result[0]);
-              setConnButtonText('Wallet Connected')
-            })
-        } else {
-          //@dev - this message will be print out on the broswer if you have not install MetaMask
-          setErrorMessage(alert('Need to install MetaMask to continue with MetaPay!'))
-        }
-      }
+    //   const connectWallet = () => {
+    //     if (window.ethereum) {
+    //         window.ethereum.request({ method: 'eth_requestAccounts'})
+    //         .then(result => {
+    //           accountChangedHandler(result[0]);
+    //           setConnButtonText('Wallet Connected')
+    //         })
+    //     } else {
+    //       //@dev - this message will be print out on the broswer if you have not install MetaMask
+    //       setErrorMessage(alert('Need to install MetaMask to continue with MetaPay!'))
+    //     }
+    //   }
 
-      const accountChangedHandler = (newAccount) => {
-        setDefaultAccount(newAccount);
-      }
+    //   const accountChangedHandler = (newAccount) => {
+    //     setDefaultAccount(newAccount);
+    //   }
 
      
      return (
@@ -80,9 +81,12 @@ const Navbar = () => {
                 <Image src={logo} alt="metapay logo" />
                 </div>
                </Link>
-               <Button onClick={connectWallet}>{connButtonText}</Button>
+               {/* Wagmi Connection Button */}
+               <ConnectionButton />
+
+               {/* <Button onClick={connectWallet}>{connButtonText}</Button> */}
                {/* @dev - error message that will be printed on the browser */}
-               {errorMessage}
+               {/* {errorMessage} */}
           </Nav>
      )
 }

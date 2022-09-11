@@ -79,6 +79,7 @@ const ModalContent = styled.div`
           font-weight: 500;
           font-size: 25px;
           line-height: 130%;
+          cursor: pointer;
      }
 `
 
@@ -139,10 +140,9 @@ const WelcomeModal = ( {showModal, setShowModal} : IProps) => {
                            
                          <h1>Welcome to MetaPay</h1>
 
-                         <p>You will need a crypto wallet like MetaMask to interact with MetaPay. 
-                              Please if you don’t have it, we require you to install it 
-                              in your available devices. If you have one please proceed 
-                              and click the button below. Thanks!</p>
+                         <p>MetaPay features are very easy and smart to use.
+                            With MetaPay you will get help to fund your various campaign
+                            and receive help to fund your campaign in a decentrialized way.</p>
                      <Link href="/Home">
                          <button>Proceed</button>
                     </Link>
